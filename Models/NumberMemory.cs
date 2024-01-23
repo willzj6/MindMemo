@@ -9,20 +9,20 @@ namespace MindMemo.Models
     class NumberMemory
     {
         public int level { get; set; } = 0;
-        public string randomNumbers { get; set; } = string.Empty;
+        public string randomNumbers { get; set; } = "";
 
         public bool isCorrect = true;
 
         public void StartLevel()
         {
-            level += 1;
+            this.level += 1;
             GenerateRandomNumbers();
         }
 
         public void GenerateRandomNumbers()
         {
             Random rnd = new Random();
-            randomNumbers = rnd.Next(10 ^ (level - 1), 10 ^ level).ToString();
+            this.randomNumbers = rnd.Next((int)Math.Pow(10, level-1), (int)Math.Pow(10, level) -1).ToString();
         }
 
         public void CheckAnswer(string answer)

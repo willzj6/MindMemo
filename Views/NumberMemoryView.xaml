@@ -4,8 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:MindMemo.Views"
-             mc:Ignorable="d" 
+             xmlns:prelocal="clr-namespace:MindMemo"
+             mc:Ignorable="d"
+             DataContext="{Binding}"
              d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <prelocal:BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+    </UserControl.Resources>
     <Grid Background="Coral">
         <Grid.RowDefinitions>
             <RowDefinition/>
@@ -16,10 +21,21 @@
             <RowDefinition/>
         </Grid.RowDefinitions>
 
-        <Button Content="Start" x:Name="btn_Start" Grid.Row="2" Width="100" Height="40" Grid.RowSpan="2" VerticalAlignment="Center" Click="btn_Start_Click" d:Visibility="Collapsed"/>
-        <TextBlock x:Name="txtBlock_Numbers" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding randomNumbers}" d:Text="12345" Visibility="Collapsed" d:Visibility="Visible" FontSize="48"/>
-        <TextBox x:Name="txtBox_Answer" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" Visibility="Collapsed" d:Visibility="Visible"/>
-        <Button x:Name="btn_Submit" Grid.Row="3" Width="100" Height="20" Content="Submit" VerticalAlignment="Bottom" Visibility="Collapsed" d:Visibility="Visible" Click="btn_Submit_Click"/>
+        <Button Content="Start" x:Name="btn_Start" Grid.Row="2" Width="100" Height="40" Grid.RowSpan="2" VerticalAlignment="Center" Command="{Binding StartLevelCommand}" Visibility="{Binding IsStartButtonVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}" d:Visibility="Collapsed"/>
+        
+        <TextBlock x:Name="txtBlock_Numbers" HorizontalAlignment="Center" Grid.Row="2" TextWrapping="Wrap" VerticalAlignment="Center" Text="{Binding RandomNumbers}"  d:Text="12345" Visibility="{Binding IsNumberScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}" d:Visibility="Collapsed" FontSize="48"/>
+        <ProgressBar Name="timeBar" Maximum="100" Width ="200" Height="10" Grid.Row="3" Value="{Binding RemainingTime}" Visibility="{Binding IsNumberScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}" d:Visibility="Collapsed"/>
+        
+        <TextBox x:Name="txtBox_Answer" HorizontalAlignment="Center" Grid.Row="3" TextWrapping="Wrap" Text="{Binding UserAnswer, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" Visibility="{Binding IsAnswerScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}" d:Visibility="Collapsed"/>
+        <Button x:Name="btn_Submit" Grid.Row="3" Width="100" Height="20" Content="Submit" VerticalAlignment="Bottom" Command="{Binding SubmitAnswerCommand}" Visibility="{Binding IsAnswerScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}" d:Visibility="Collapsed"/>
+
+        <Label x:Name="lbl_Level" Content="{Binding Level}" d:Content="Level 1" Grid.Row="2" HorizontalAlignment="Center" FontSize="48" Visibility="{Binding IsContinueScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}" d:Visibility="Collapsed"/>
+        <Button x:Name="btn_Continue" Content="Continue" Grid.Row="3" Width="100" Height="30" Visibility="{Binding IsContinueScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}" Command="{Binding StartLevelCommand}" d:Visibility="Collapsed"/>
+
+        <TextBlock Text="The number was" Grid.Row="1" HorizontalAlignment="Center" FontSize="18" Visibility="{Binding IsFailScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
+        <TextBlock Text="{Binding RandomNumbers}" d:Text="1234" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" FontSize="36" Visibility="{Binding IsFailScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
+        <TextBlock Text="Your number was" Grid.Row="2" HorizontalAlignment="Center" FontSize="18" Visibility="{Binding IsFailScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
+        <TextBlock Text="{Binding UserAnswer}" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="36" d:Text="2345" Visibility="{Binding IsFailScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
 
 
     </Grid>

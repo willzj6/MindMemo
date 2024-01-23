@@ -24,20 +24,18 @@ namespace MindMemo.Views
         public NumberMemoryView()
         {
             InitializeComponent();
-            DataContext = new NumberMemoryViewModel();
         }
 
-        private void btn_Start_Click(object sender, RoutedEventArgs e)
-        {
-            btn_Start.Visibility = Visibility.Collapsed;
-            txtBlock_Numbers.Visibility = Visibility.Visible;
-            
-        }
+        //private void btn_Start_Click(object sender, RoutedEventArgs e)
+        //{
+        //    btn_Start.Visibility = Visibility.Collapsed;
+        //    txtBlock_Numbers.Visibility = Visibility.Visible;
+        //}
 
-        private void btn_Submit_Click(object sender, RoutedEventArgs e)
-        {
-            string answer = txtBox_Answer.Text;
+        //private void btn_Submit_Click(object sender, RoutedEventArgs e)
+        //{
+        //    string answer = txtBox_Answer.Text;
 
-        }
+        //}
     }
 }
