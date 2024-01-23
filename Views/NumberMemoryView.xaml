@@ -36,7 +36,7 @@
         <TextBlock Text="{Binding RandomNumbers}" d:Text="1234" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" FontSize="36" Visibility="{Binding IsFailScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
         <TextBlock Text="Your number was" Grid.Row="2" HorizontalAlignment="Center" FontSize="18" Visibility="{Binding IsFailScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
         <TextBlock Text="{Binding UserAnswer}" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="36" d:Text="2345" Visibility="{Binding IsFailScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
-
+        <Button Content="Try Again" Grid.Row="3" Height="30" Width="200" Visibility="{Binding IsFailScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}" Command="{Binding RestartCommand}"/>
 
     </Grid>
 </UserControl>

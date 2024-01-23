@@ -250,4 +250,13 @@ namespace MindMemo.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
+
+    public enum NumberMemoryAppScreen
+    {
+        StartScreen,
+        NumberScreen,
+        AnswerScreen,
+        ContinueScreen,
+        GameOverScreen
+    }
 }
