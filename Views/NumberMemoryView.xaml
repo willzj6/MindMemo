@@ -32,11 +32,11 @@
         <Label x:Name="lbl_Level" Content="{Binding Level}" d:Content="Level 1" Grid.Row="2" HorizontalAlignment="Center" FontSize="48" Visibility="{Binding IsContinueScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}" d:Visibility="Collapsed"/>
         <Button x:Name="btn_Continue" Content="Continue" Grid.Row="3" Width="100" Height="30" Visibility="{Binding IsContinueScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}" Command="{Binding StartLevelCommand}" d:Visibility="Collapsed"/>
 
-        <TextBlock Text="The number was" Grid.Row="1" HorizontalAlignment="Center" FontSize="18" Visibility="{Binding IsFailScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
-        <TextBlock Text="{Binding RandomNumbers}" d:Text="1234" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" FontSize="36" Visibility="{Binding IsFailScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
-        <TextBlock Text="Your number was" Grid.Row="2" HorizontalAlignment="Center" FontSize="18" Visibility="{Binding IsFailScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
-        <TextBlock Text="{Binding UserAnswer}" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="36" d:Text="2345" Visibility="{Binding IsFailScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
-        <Button Content="Try Again" Grid.Row="3" Height="30" Width="200" Visibility="{Binding IsFailScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}" Command="{Binding RestartCommand}"/>
+        <TextBlock Text="The number was" Grid.Row="1" HorizontalAlignment="Center" FontSize="18" Visibility="{Binding IsGameOverScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
+        <TextBlock Text="{Binding RandomNumbers}" d:Text="1234" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" FontSize="36" Visibility="{Binding IsGameOverScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
+        <TextBlock Text="Your number was" Grid.Row="2" HorizontalAlignment="Center" FontSize="18" Visibility="{Binding IsGameOverScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
+        <TextBlock Text="{Binding UserAnswer}" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="36" d:Text="2345" Visibility="{Binding IsGameOverScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}"/>
+        <Button Content="Try Again" Grid.Row="3" Height="30" Width="200" Visibility="{Binding IsGameOverScreenVisible, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource VisibilityConverter}}" Command="{Binding TryAgainCommand}"/>
 
     </Grid>
 </UserControl>

@@ -14,9 +14,9 @@ namespace MindMemo.ViewModels
     {
         public NumberMemory numberMemory = new NumberMemory();
 
-        const int LEVEL_TIMER = 5;
+        const int LEVEL_TIMER = 100;
 
-        private bool isCorrect = true;
+        private readonly MindMemoContext _context = new MindMemoContext(); // Get DBContext
 
         private bool _isStartButtonVisible = true;
         public bool IsStartButtonVisible
@@ -74,16 +74,16 @@ namespace MindMemo.ViewModels
             }
         }
 
-        private bool _isFailScreenVisible = false;
-        public bool IsFailScreenVisible
+        private bool _isGameOverScreenVisible = false;
+        public bool IsGameOverScreenVisible
         {
-            get { return _isFailScreenVisible; }
+            get { return _isGameOverScreenVisible; }
             set
             {
-                if (_isFailScreenVisible != value)
+                if (_isGameOverScreenVisible != value)
                 {
-                    _isFailScreenVisible= value;
-                    OnPropertyChanged(nameof(IsFailScreenVisible));
+                    _isGameOverScreenVisible = value;
+                    OnPropertyChanged(nameof(IsGameOverScreenVisible));
                 }
             }
         }
@@ -152,7 +152,7 @@ namespace MindMemo.ViewModels
                 if (_startLevelCommand == null)
                 {
                     _startLevelCommand = new RelayCommand(param => StartLevel(),
-                        param => predicate(isCorrect));
+                        param => predicate(null));
                 }
                 return _startLevelCommand;
             }
@@ -166,9 +166,23 @@ namespace MindMemo.ViewModels
                 if (_submitAnswerCommand == null)
                 {
                     _submitAnswerCommand = new RelayCommand(param => SubmitAnswer(),
-                        param => predicate(isCorrect));
+                        param => predicate(null));
                 }
                 return _submitAnswerCommand;
+            }
+        }
+
+        RelayCommand _tryAgainCommand;
+        public ICommand TryAgainCommand
+        {
+            get
+            {
+                if (_tryAgainCommand == null)
+                {
+                    _tryAgainCommand = new RelayCommand(param => TryAgain(),
+                        param => predicate(null));
+                }
+                return _tryAgainCommand;
             }
         }
 
@@ -189,7 +203,8 @@ namespace MindMemo.ViewModels
         }
         private void Timer_Tick(object sender, EventArgs e)
         {
-            RemainingTime--;
+            //RemainingTime--;
+            RemainingTime -= 20;
 
             // Update the time bar value
             //timeBar.Value = remainingTime;
@@ -213,16 +228,43 @@ namespace MindMemo.ViewModels
             }
             else
             {
-                
+                AddScoreToDatabase();
+                ShowGameOverScreen();
             }
         }
 
+        private void AddScoreToDatabase()
+        {
+            DateTime dateTime = DateTime.Now;
+            int Score = numberMemory.level;
+            string username = "HarryPotter";
+            NumberMemoryScore nms = new NumberMemoryScore() { Username = username, Time = dateTime, Score = Score };
+            _context.NumberMemoryScores.Add(nms);
+            _context.SaveChanges();
+        }
+
+        private void TryAgain()
+        {
+            numberMemory = new NumberMemory();
+            ShowStartButton();
+        }
+
+        // This this is a horrible set up. Change this ASAP
+        private void ShowStartButton()
+        {
+            IsNumberScreenVisible = false;
+            IsAnswerScreenVisible = false;
+            IsContinueScreenVisible = false;
+            IsStartButtonVisible = true;
+            IsGameOverScreenVisible = false;
+        }
         private void ShowNumberScreen()
         {
             IsNumberScreenVisible = true;
             IsAnswerScreenVisible = false;
             IsContinueScreenVisible = false;
             IsStartButtonVisible = false;
+            IsGameOverScreenVisible = false;
         }
 
         private void ShowAnswerScreen()
@@ -231,6 +273,7 @@ namespace MindMemo.ViewModels
             IsNumberScreenVisible= false;
             IsContinueScreenVisible = false;
             IsStartButtonVisible= false;
+            IsGameOverScreenVisible = false;
         }
 
         private void ShowContinueScreen()
@@ -239,6 +282,16 @@ namespace MindMemo.ViewModels
             IsAnswerScreenVisible = false;
             IsStartButtonVisible = false;
             IsNumberScreenVisible = false;
+            IsGameOverScreenVisible = false;
+        }
+
+        private void ShowGameOverScreen()
+        {
+            IsGameOverScreenVisible = true;
+            IsAnswerScreenVisible = false;
+            IsStartButtonVisible = false;
+            IsNumberScreenVisible = false;
+            IsContinueScreenVisible=false;
         }
 
         public bool predicate(object param)

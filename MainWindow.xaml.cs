@@ -34,9 +34,14 @@ namespace MindMemo
 
         }
 
+        private void NumberMemoryScores_Click(object sender, RoutedEventArgs e)
+        {
+            DataContext = new NumberMemoryDashboardViewModel();
+        }
+
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            DataContext = new HomeViewModel();
+            DataContext = new NumberMemoryViewModel();
         }
     }
 }

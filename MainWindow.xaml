@@ -15,6 +15,9 @@
         <DataTemplate x:Name="numberMemoryViewTemplate" DataType="{x:Type viewmodels:NumberMemoryViewModel}">
             <views:NumberMemoryView DataContext="{Binding}"/>
         </DataTemplate>
+        <DataTemplate x:Name="numberMemoryDashboardViewTemplate" DataType="{x:Type viewmodels:NumberMemoryDashboardViewModel}">
+            <views:NumberMemoryDashboardView DataContext="{Binding}"/>
+        </DataTemplate>
     </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -34,8 +37,9 @@
 
         <DockPanel Grid.Row="0" Grid.Column="0" Grid.RowSpan="5" Background="PowderBlue">
             <StackPanel>
-                <Button Content="Home" Click="HomeBtn_Click"/>
+                <!--<Button Content="Home" Click="HomeBtn_Click"/>-->
                 <Button Content="Number Memory" Click="NumberMemory_Click"/>
+                <Button Content="Number Memory Scores" Click="NumberMemoryScores_Click"/>
 
             </StackPanel>
         </DockPanel>
