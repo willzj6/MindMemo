@@ -29,38 +29,38 @@ namespace MindMemo.Views
         public NumberMemoryDashboardView()
         {
             InitializeComponent();
-            ScoreChart();
+            //ScoreChart();
         }
 
-        private void ScoreChart()
-        {
-            DateTime endDate = DateTime.Today; // Current date
-            DateTime startDate = endDate.AddDays(-6); // 7 days ago
+        //private void ScoreChart()
+        //{
+        //    DateTime endDate = DateTime.Today; // Current date
+        //    DateTime startDate = endDate.AddDays(-6); // 7 days ago
 
-            List<DateTime> dateRange = Enumerable.Range(0, 7)
-                .Select(offset => endDate.AddDays(-offset))
-                .ToList();
+        //    List<DateTime> dateRange = Enumerable.Range(0, 7)
+        //        .Select(offset => endDate.AddDays(-offset))
+        //        .ToList();
 
-            List<double?> selectWeeklyAverageScores = dateRange
-                .GroupJoin(
-                    _context.NumberMemoryScores
-                        .Where(entry => entry.Time >= startDate && entry.Time <= endDate), // Filter by date range
-                    date => date.Date,
-                    entry => entry.Time.Date,
-                    (date, entries) => entries.Any() ? entries.Average(entry => entry.Score) : 0
-                )
-                .ToList();
+        //    List<double?> selectWeeklyAverageScores = dateRange
+        //        .GroupJoin(
+        //            _context.NumberMemoryScores
+        //                .Where(entry => entry.Time >= startDate && entry.Time <= endDate), // Filter by date range
+        //            date => date.Date,
+        //            entry => entry.Time.Date,
+        //            (date, entries) => entries.Any() ? entries.Average(entry => entry.Score) : 0
+        //        )
+        //        .ToList();
 
-            List<double> nonNullWeeklyAverageScores = selectWeeklyAverageScores.Select(d => d ?? 0.0).ToList();
+        //    List<double> nonNullWeeklyAverageScores = selectWeeklyAverageScores.Select(d => d ?? 0.0).ToList();
 
 
-            LineSeries lines = new LineSeries                               // Create a lineSeries from the share prices 
-            {
-                Values = new ChartValues<double>(nonNullWeeklyAverageScores)
-            };
+        //    LineSeries lines = new LineSeries                               // Create a lineSeries from the share prices 
+        //    {
+        //        Values = new ChartValues<double>(nonNullWeeklyAverageScores)
+        //    };
 
-            numberMemoryChart.Series.Clear();                                        // Clear any existing charts
-            numberMemoryChart.Series.Add(lines);                                     // Draw the line chart
-        }
+        //    numberMemoryChart.Series.Clear();                                        // Clear any existing charts
+        //    numberMemoryChart.Series.Add(lines);                                     // Draw the line chart
+        //}
     }
 }
